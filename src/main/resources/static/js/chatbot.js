@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function resetChat() {
         chatMessages.innerHTML = '';
         sessionStorage.removeItem('chatHistory');
-        addBotMessage('¡Hola! Bienvenido al concesionario KIA. ¿En qué puedo ayudarte hoy?', [
+        addBotMessage('¡Hola! Bienvenido al concesionario NexGen. ¿En qué puedo ayudarte hoy?', [
             { text: 'Vehículos disponibles', value: 'vehiculos' },
             { text: 'Agendar cita', value: 'agendar' },
             { text: 'Promociones', value: 'promociones' },
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Mostrar mensaje inicial si no hay historial
     if (!sessionStorage.getItem('chatHistory')) {
-        addBotMessage('¡Hola! Bienvenido al concesionario KIA. ¿En qué puedo ayudarte hoy?', [
+        addBotMessage('¡Hola! Bienvenido al concesionario NexGen. ¿En qué puedo ayudarte hoy?', [
             { text: 'Vehículos disponibles', value: 'vehiculos' },
             { text: 'Agendar cita', value: 'agendar' },
             { text: 'Promociones', value: 'promociones' },

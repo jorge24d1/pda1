@@ -38,7 +38,7 @@ public class VehiculoController {
 
     @GetMapping("/fragments/chatbot")
     public String Inicio(Model model) {
-//
+    //
         return "chatbot";
     }
 

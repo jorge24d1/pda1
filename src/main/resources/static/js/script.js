@@ -80,6 +80,26 @@ $(document).ready(function (){
     });
 });
 
+// filtro estado delplegable:
+document.addEventListener("DOMContentLoaded", function () {
+    const filtro = document.getElementById("filtro-estado");
+    const filas = document.querySelectorAll("#tabla-citas tbody tr");
+
+    filtro.addEventListener("change", function () {
+        const estadoSeleccionado = this.value;
+
+        filas.forEach(fila => {
+            const tieneClase = fila.classList.contains(estadoSeleccionado);
+
+            if (estadoSeleccionado === "TODAS" || tieneClase) {
+                fila.style.display = "";
+            } else {
+                fila.style.display = "none";
+            }
+        });
+    });
+});
+
  // Delegación de eventos para los botones
  document.addEventListener('click', function(e) {
      // Aprobar cita

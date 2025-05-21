@@ -37,7 +37,6 @@ public class SecurityConfig {
                                 "/css/**",
                                 "/js/**",
                                 "/STloginup.css",
-                                "/uploads/**",
                                 "/auth/**"
 
                         ).permitAll()
@@ -58,6 +57,7 @@ public class SecurityConfig {
                 );
         return http.build();
     }
+    
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {

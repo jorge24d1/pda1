@@ -6,6 +6,8 @@ import com.concesionario.model.Vehiculo;
 // import com.concesionario.repository.TrabajadoresRepository;
 import com.concesionario.service.*;
 import com.concesionario.repository.CitaRepository;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -45,12 +47,14 @@ public class AdminController {
                            VehiculoService vehiculoService,
                            CitaService citaService,
                            NotificacionService notificacionService,
-                           PasswordEncoder passwordEncoder) {
+                           PasswordEncoder passwordEncoder,
+                           Cloudinary cloudinary) {
         
         this.vehiculoService = vehiculoService;
         this.citaService = citaService;
         this.notificacionService = notificacionService;
         this.passwordEncoder = passwordEncoder;
+        this.cloudinary = cloudinary;
     }
     // @Autowired
     // private TrabajadoresRepository trabajadoresRepository;
@@ -63,9 +67,11 @@ public class AdminController {
     private CitaService citaService;
     @Autowired
     private NotificacionService notificacionService;
+    @Autowired
+    private Cloudinary cloudinary;
 
-    @Value("${upload.dir}")
-    private String uploadDir;
+    // @Value("${upload.dir}")
+    // private String uploadDir;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -103,6 +109,21 @@ public class AdminController {
 
         return "Admin/Dashboard";
     }
+
+    // ejemplo 2
+    private String extraerPublicIdDesdeUrl(String url) {
+    if (url == null || !url.contains("/")) return null;
+
+    // Ejemplo de URL: https://res.cloudinary.com/demo/image/upload/v1234567890/carpeta/miimagen.jpg
+    try {
+        String[] partes = url.split("/");
+        String nombreConExtension = partes[partes.length - 1];
+        return url.substring(url.indexOf("/upload/") + 8, url.lastIndexOf(".")); // desde /upload/ hasta antes de .jpg
+    } catch (Exception e) {
+        return null;
+    }
+}
+
 
     // @GetMapping("/citas")
     // public String listarCitas(@RequestParam(defaultValue = "0") int page,
@@ -296,33 +317,92 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/eliminar/{id}")
-    public String eliminarVehiculo(@PathVariable String id) {
-        Vehiculo vehiculo = vehiculoService.obtenerPorId(id);
-        if (vehiculo.getImagenUrl() != null) {
-            Path rutaImagen = Paths.get(uploadDir + vehiculo.getImagenUrl().replace("/uploads/", ""));
-            try {
-                Files.deleteIfExists(rutaImagen);
-            } catch (IOException e) {
-                throw new RuntimeException("Error al eliminar la imagen", e);
+// intento uno
+    // @GetMapping("/eliminar/{id}")
+    // public String eliminarVehiculo(@PathVariable String id) {
+    //     Vehiculo vehiculo = vehiculoService.obtenerPorId(id);
+
+    //     if (vehiculo.getImagenPublicId() != null && !vehiculo.getImagenPublicId().isEmpty()) {
+    //         try {
+    //             cloudinary.uploader().destroy(vehiculo.getImagenPublicId(), ObjectUtils.emptyMap());
+    //         } catch (IOException e) {
+    //             throw new RuntimeException("Error al eliminar la imagen de Cloudinary", e);
+    //         }
+    //     }
+
+    //     vehiculoService.eliminarVehiculo(id);
+    //     return "redirect:/admin/Dashboard";
+    // }
+
+    // private Map<String, String> guardarImagenCloudinary(MultipartFile imagen) throws IOException {
+    //     Map uploadResult = cloudinary.uploader().upload(imagen.getBytes(), ObjectUtils.emptyMap());
+    //     String url = (String) uploadResult.get("secure_url");
+    //     String publicId = (String) uploadResult.get("public_id");
+
+    //     return Map.of("url", url, "publicId", publicId);
+    // }
+    // intento 2
+@GetMapping("/eliminar/{id}")
+public String eliminarVehiculo(@PathVariable String id) {
+    Vehiculo vehiculo = vehiculoService.obtenerPorId(id);
+
+    if (vehiculo.getImagenUrl() != null) {
+        try {
+            // Extraer el public_id de Cloudinary desde la URL
+            String url = vehiculo.getImagenUrl();
+            String publicId = extraerPublicIdDesdeUrl(url);
+
+            if (publicId != null) {
+                cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
             }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al eliminar la imagen en Cloudinary", e);
         }
-        vehiculoService.eliminarVehiculo(id);
-        return "redirect:/admin/Dashboard";
     }
 
-    private String guardarImagen(MultipartFile imagen) throws IOException {
-        Path uploadPath = Paths.get(uploadDir);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-
-        String nombreImagen = System.currentTimeMillis() + "_" + imagen.getOriginalFilename();
-        Path rutaCompleta = uploadPath.resolve(nombreImagen);
-        Files.copy(imagen.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
-
-        return "/uploads/" + nombreImagen;
+    vehiculoService.eliminarVehiculo(id);
+    return "redirect:/admin/Dashboard";
+}
+private String guardarImagen(MultipartFile imagen) throws IOException {
+    if (imagen == null || imagen.isEmpty()) {
+        throw new IllegalArgumentException("La imagen está vacía o es nula.");
     }
+
+    Map uploadResult = cloudinary.uploader().upload(imagen.getBytes(), ObjectUtils.emptyMap());
+
+    return (String) uploadResult.get("secure_url");
+}
+
+    
+// de manera local
+    // @GetMapping("/eliminar/{id}")
+    // public String eliminarVehiculo(@PathVariable String id) {
+    //     Vehiculo vehiculo = vehiculoService.obtenerPorId(id);
+    //     if (vehiculo.getImagenUrl() != null) {
+    //         Path rutaImagen = Paths.get(uploadDir + vehiculo.getImagenUrl().replace("/uploads/", ""));
+    //         try {
+    //             Files.deleteIfExists(rutaImagen);
+    //         } catch (IOException e) {
+    //             throw new RuntimeException("Error al eliminar la imagen", e);
+    //         }
+    //     }
+    //     vehiculoService.eliminarVehiculo(id);
+    //     return "redirect:/admin/Dashboard";
+    // }
+
+    // private String guardarImagen(MultipartFile imagen) throws IOException {
+    //     Path uploadPath = Paths.get(uploadDir);
+    //     if (!Files.exists(uploadPath)) {
+    //         Files.createDirectories(uploadPath);
+    //     }
+
+    //     String nombreImagen = System.currentTimeMillis() + "_" + imagen.getOriginalFilename();
+    //     Path rutaCompleta = uploadPath.resolve(nombreImagen);
+    //     Files.copy(imagen.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
+
+    //     return "/uploads/" + nombreImagen;
+    // }
 
 
 

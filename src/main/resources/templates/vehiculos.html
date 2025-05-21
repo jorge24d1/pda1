@@ -390,6 +390,44 @@
                 flex-direction: column;
             }
         }
+
+.vehicle-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.vehicle-card {
+    flex: 1 1 calc(25% - 20px); /* 4 tarjetas por fila */
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.carousel-controls {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.carousel-controls button {
+    background-color: #d31c1c;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    margin: 0 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.carousel-controls button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
     </style>
 </head>
 <body>
@@ -417,8 +455,10 @@
 <main class="main-content">
     <h2 class="section-title">Explora Nuestra Gama</h2>
 
-    <div th:each="categoria : ${categorias}" class="category-section" th:id="${'categoria-' + categoria.replace(' ', '-').toLowerCase()}">
+    <div th:each="categoria, iterStat : ${categorias}" class="category-section" th:id="${'categoria-' + categoria.replace(' ', '-').toLowerCase()}" th:data-categoria-index="${iterStat.index}">
         <h3 class="category-title" th:text="${categoria}"></h3>
+        
+         <div class="vehicle-carousel" th:data-categoria-index="${iterStat.index}">
         <div class="vehicle-grid">
             <div th:each="vehiculo : ${vehiculosPorCategoria.get(categoria)}" class="vehicle-card">
                 <img th:src="${vehiculo.imagenUrl}" alt="Imagen del vehículo" class="vehicle-image">
@@ -439,6 +479,13 @@
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Botones de navegación -->
+            <div class="carousel-controls">
+                <button class="prev-btn">← Anterior</button>
+                <button class="next-btn">Siguiente →</button>
             </div>
         </div>
     </div>
@@ -496,7 +543,7 @@
     </div>
 
     <div class="copyright">
-        <p>&copy; 2023 Concesionario KIA. Todos los derechos reservados.</p>
+        <p>&copy; 2023 Concesionario NexGen. Todos los derechos reservados.</p>
     </div>
 </footer>
 <script th:src="@{/js/chatbot.js}"></script>
@@ -512,7 +559,7 @@
     });
 
 
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     // Si hay un hash en la URL, hacer scroll a esa sección
     if (window.location.hash) {
         const targetSection = document.querySelector(window.location.hash);
@@ -530,6 +577,48 @@
         }
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const VEHICULOS_POR_PAGINA = 12;
+
+    document.querySelectorAll('.vehicle-carousel').forEach(carousel => {
+        const categoriaIndex = carousel.dataset.categoriaIndex;
+        const cards = carousel.querySelectorAll('.vehicle-card');
+        let currentPage = 0;
+        const totalPages = Math.ceil(cards.length / VEHICULOS_POR_PAGINA);
+
+        const showPage = (page) => {
+            const start = page * VEHICULOS_POR_PAGINA;
+            const end = start + VEHICULOS_POR_PAGINA;
+
+            cards.forEach((card, index) => {
+                card.style.display = (index >= start && index < end) ? 'block' : 'none';
+            });
+
+            carousel.querySelector('.prev-btn').disabled = page === 0;
+            carousel.querySelector('.next-btn').disabled = page >= totalPages - 1;
+        };
+
+        // Eventos
+        carousel.querySelector('.prev-btn').addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        carousel.querySelector('.next-btn').addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        // Mostrar primera página por defecto
+        showPage(currentPage);
+    });
+});
+
 </script>
 </body>
 </html>

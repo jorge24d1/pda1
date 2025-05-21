@@ -1,5 +1,7 @@
 package com.concesionario.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.concesionario.model.Vehiculo;
 import com.concesionario.repository.VehiculoRepository;
 import org.slf4j.Logger;
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 // import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.Map;
+
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,12 +29,20 @@ public class VehiculoService {
 
     private final VehiculoRepository vehiculoRepository;
 
-    @Value("${upload.dir}")
-    private String uploadDir;
+    // @Value("${upload.dir}")
+    // private String uploadDir;
 
-    public VehiculoService(VehiculoRepository vehiculoRepository) {
+    private final Cloudinary cloudinary;
+    public VehiculoService(VehiculoRepository vehiculoRepository, Cloudinary cloudinary) {
         this.vehiculoRepository = vehiculoRepository;
+        this.cloudinary = cloudinary;
     }
+    
+    
+
+    // public VehiculoService(VehiculoRepository vehiculoRepository) {
+    //     this.vehiculoRepository = vehiculoRepository;
+    // }
 
     // Métodos para todos los vehículos
     public List<Vehiculo> obtenerTodos() {
@@ -107,21 +119,33 @@ public class VehiculoService {
 
 
 
-    // Método privado para manejo de imágenes
-    private String guardarImagen(MultipartFile imagen) throws IOException {
-        Path uploadPath = Paths.get(uploadDir);
-
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-
-        String nombreArchivo = System.currentTimeMillis() + "_" +
-                Objects.requireNonNull(imagen.getOriginalFilename());
-        Path rutaCompleta = uploadPath.resolve(nombreArchivo);
-        Files.copy(imagen.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
-
-        return "/uploads/" + nombreArchivo;
+private String guardarImagen(MultipartFile imagen) throws IOException {
+    if (imagen == null || imagen.isEmpty()) {
+        throw new IllegalArgumentException("La imagen está vacía o es nula.");
     }
+
+    
+    Map uploadResult = cloudinary.uploader().upload(imagen.getBytes(), ObjectUtils.emptyMap());
+
+    return (String) uploadResult.get("secure_url");
+}
+
+
+    // Método privado para manejo de imágenes de forma local
+    // private String guardarImagen(MultipartFile imagen) throws IOException {
+    //     Path uploadPath = Paths.get(uploadDir);
+
+    //     if (!Files.exists(uploadPath)) {
+    //         Files.createDirectories(uploadPath);
+    //     }
+
+    //     String nombreArchivo = System.currentTimeMillis() + "_" +
+    //             Objects.requireNonNull(imagen.getOriginalFilename());
+    //     Path rutaCompleta = uploadPath.resolve(nombreArchivo);
+    //     Files.copy(imagen.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
+
+    //     return "/uploads/" + nombreArchivo;
+    // }
 
     // Manejo de estado
     public void cambiarEstadoDestacado(String id, boolean destacado) {

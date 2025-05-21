@@ -80,6 +80,14 @@
 			<artifactId>javafaker</artifactId>
 			<version>1.0.2</version>
 		</dependency>
+
+		<!-- Cloudinary para imagenes -->
+		<dependency>
+		    <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.32.2</version>
+        </dependency>
+		
 	</dependencies>
 
 	<build>
