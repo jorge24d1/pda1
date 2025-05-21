@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - KIA Concesionario Oficial</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        
+
+        /* Barra de navegación */
+        nav {
+            position: fixed;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(255, 255, 255, 0);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        nav.scrolled {
+             color: #333333 !important; /* Gris oscuro para buen contraste en fondo blanco */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav.scrolled a {
+            color: black !important;
+        }
+
+        .nav-logo img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: rgba(104, 104, 104); /* Blanco con ligera transparencia para el estado inicial */
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+
+        }
+
+        .nav-links a:hover {
+            color: black;
+        }
+
+
+        /* Contenedor principal */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 100px 20px 50px; /* Espacio para la barra de navegación fija */
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .card-header h2 {
+            color: #002e5b;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .alert {
+            background-color: #e53238;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .alert.success {
+            background-color: #25D366;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #002e5b;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 46, 91, 0.2);
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #002e5b;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password a:hover {
+            color: #e53238;
+            text-decoration: underline;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: #002e5b;
+            color: white;
+            border: none;
+            width: 170px;
+        }
+
+        .btn-primary:hover {
+            background: #e53238;
+        }
+
+        .divider {
+            margin: 20px auto;
+            width: 80%;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .create-account {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .create-account a {
+            color: #002e5b;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .create-account a:hover {
+            color: #e53238;
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: #111;
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #e53238;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            background: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #e53238;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        /* Botón flotante de WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .login-card {
+                margin: 0 20px;
+            }
+
+            .card-body {
+                padding: 20px;
+            }
+
+            .btn-primary {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Barra de navegación -->
+<nav id="mainNav">
+    <!-- este va con lo del logo arriba --> 
+    <!--<div class="nav-logo logo-container">
+        <span class="logo-nexgen">NexGen</span>
+        <span class="logo-motors">Motors</span>
+    </div> -->
+    <div class="nav-logo">
+        <img src="https://www.kia.com/content/dam/kwp/kr/es/common/header/logo.png" alt="KIA Logo">
+    </div>
+    <div class="nav-links">
+        <a href="/vehiculos">Vehículos</a>
+        <!-- <a th:href="@{/usuario/agendamiento}">Agendamiento online</a> -->
+        <a href="/login">Iniciar sesión</a>
+        <a href="/usuario/cita">Cita</a>
+    </div>
+</nav>
+
+<!-- Contenedor de login -->
+<div class="login-container">
+    <div class="login-card">
+        <div class="card-header">
+            <h2>Iniciar Sesión</h2>
+        </div>
+        <div class="card-body">
+            <div th:if="${error}" class="alert" th:text="${error}"></div>
+            <div th:if="${success}" class="alert success" th:text="${success}"></div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <input type="email" id="username" name="username" placeholder="Correo" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                </div>
+                <div class="forgot-password">
+                    <a th:href="@{/auth/forgot-password}">¿Olvidaste tu contraseña?</a>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                </div>
+                <div class="divider"></div>
+                <div class="create-account">
+                    <span>¿No tienes una cuenta? </span>
+                    <a th:href="@{/registro}">Registrarse</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Vehículos</h3>
+            <ul>
+                <li><a href="#">Nuevos modelos</a></li>
+                <li><a href="#">Seminuevos</a></li>
+                <li><a href="#">Eléctricos e híbridos</a></li>
+                <li><a href="#">Promociones</a></li>
+                <li><a href="#">Cotizador en línea</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Servicios</h3>
+            <ul>
+                <li><a href="#">Agendar servicio</a></li>
+                <li><a href="#">Estado de mi vehículo</a></li>
+                <li><a href="#">Garantías</a></li>
+                <li><a href="#">Accesorios</a></li>
+                <li><a href="#">Asistencia vial</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Financiamiento</h3>
+            <ul>
+                <li><a href="#">Crédito automotriz</a></li>
+                <li><a href="#">Leasing</a></li>
+                <li><a href="#">Seguros</a></li>
+                <li><a href="#">Calculadora de pagos</a></li>
+                <li><a href="#">Preguntas frecuentes</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Concesionario</h3>
+            <ul>
+                <li><a href="#">Sobre nosotros</a></li>
+                <li><a href="#">Trabaja con nosotros</a></li>
+                <li><a href="#">Eventos</a></li>
+                <li><a href="#">Noticias</a></li>
+                <li><a href="#">Contáctanos</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <div class="copyright">
+        <p>© 2023 Concesionario KIA. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<!-- Botón de WhatsApp -->
+<a href="https://wa.me/525512345678" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+    // Efecto de la barra de navegación
+    window.addEventListener('scroll', function() {
+        const nav = document.getElementById('mainNav');
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+</script>
+</body>
+</html>

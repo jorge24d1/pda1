@@ -1,0 +1,74 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Mis Citas</title>
+  <link rel="stylesheet" th:href="@{/userstyle.css}">
+  <style>
+    .user-bar {
+      text-align: right;
+      padding: 10px;
+      background-color: #f5f5f5;
+      margin-bottom: 20px;
+    }
+    .btn-logout {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .btn-logout:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+<div class="user-bar">
+  <span th:text="'Bienvenido, ' + ${nombreUsuario}"></span>
+  <form th:action="@{/logout}" method="post" style="display: inline;">
+    <button type="submit" class="btn-logout">Cerrar sesión</button>
+  </form>
+</div>
+
+<h1>Mis Citas</h1>
+
+<div th:if="${citas.empty}">
+  <p>No tienes citas registradas.</p>
+</div>
+
+<div th:unless="${citas.empty}">
+  <table>
+    <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Fecha Solicitud</th>
+      <th>Estado</th>
+      <th>Fecha Asignada</th>
+      <th>Notas del Administrador</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cita : ${citas}">
+      <td th:text="${cita.tipo}"></td>
+      <td th:text="${#temporals.format(cita.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
+      <td>
+          <span th:text="${cita.estado}"
+                th:class="${cita.estado == 'Pendiente'} ? 'estado-pendiente' :
+                          (${cita.estado == 'Aprobada'} ? 'estado-aprobada' : 'estado-rechazada')"></span>
+      </td>
+      <td th:text="${cita.fechaAsignada != null} ?
+                     ${#temporals.format(cita.fechaAsignada, 'dd/MM/yyyy HH:mm')} :
+                     'Por asignar'"></td>
+      <td th:text="${cita.notasAdmin ?: 'No hay notas'}" class="notas-cell"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<a th:href="@{/usuario/cita}" class="btn-nueva-cita">Solicitar Nueva Cita</a>
+<a href="/" class="btn-regresar">Regresar</a>
+</body>
+</html> -->

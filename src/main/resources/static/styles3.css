@@ -1,0 +1,224 @@
+:root {
+    --ford-blue: #00274C;
+    --ford-gray: #6D7278;
+    --text-dark: #2D2926;
+    --button-hover: #001633;
+    --button-secondary: #f0f0f0;
+}
+
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--text-dark);
+    background: #fff;
+}
+
+.main-header {
+    background: #fff;
+    padding: 0.8rem 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.ford-logo img {
+    height: 40px;
+    margin-right: 1.5rem;
+}
+
+.main-nav {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.main-nav a {
+    color: var(--ford-blue);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.3rem 0.5rem;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.main-nav a:hover {
+    background: var(--button-secondary);
+}
+
+.main-content {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilos para los botones */
+.btn-añadir, .btn-editar, .btn-eliminar, .btn-guardar, .btn-cancelar {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    color: white;
+    margin: 5px;
+}
+
+.btn-añadir {
+    background-color: var(--ford-blue);
+}
+
+.btn-añadir:hover {
+    background-color: var(--button-hover);
+}
+
+.btn-editar {
+    background-color: #ffc107;
+}
+
+.btn-editar:hover {
+    background-color: #e0a800;
+}
+
+.btn-eliminar {
+    background-color: #dc3545;
+}
+
+.btn-eliminar:hover {
+    background-color: #c82333;
+}
+
+.btn-guardar {
+    background-color: var(--ford-blue);
+}
+
+.btn-guardar:hover {
+    background-color: var(--button-hover);
+}
+
+.btn-cancelar {
+    background-color: var(--ford-gray);
+}
+
+.btn-cancelar:hover {
+    background-color: #5a6268;
+}
+
+/* Estilos para los campos de entrada y formularios */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--ford-blue);
+}
+
+input[type="text"], input[type="number"], select, input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, select:focus, input[type="file"]:focus {
+    border-color: var(--ford-blue);
+    outline: none;
+}
+
+select {
+    appearance: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+button[type="submit"], .btn-cancelar {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+/* Estilos para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: var(--ford-blue);
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+img {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Estilos para el footer */
+.main-footer {
+    background: var(--ford-blue);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+    color: white;
+}
+
+.social-container {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.social-container a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-container a:hover {
+    color: var(--ford-gray);
+}

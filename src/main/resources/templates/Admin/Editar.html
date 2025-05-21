@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Vehículo - Concesionario</title>
+    <link rel="stylesheet" href="/styles3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .btn-guardar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-cancelar {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .current-image {
+            max-width: 200px;
+            margin: 10px 0;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<header class="main-header">
+    <div class="header-content">
+        <div class="ford-logo">
+            <a th:href="@{/}"><img src="/images/ford-logo.png" alt="PA_LOGO"></a>
+        </div>
+        <nav class="main-nav">
+            <a th:href="@{/trabajadores}">VEHÍCULOS</a>
+            <a th:href="@{/trabajadores/Dashboard}">DASHBOARD</a>
+        </nav>
+    </div>
+</header>
+
+<main class="main-content">
+    <div class="form-container">
+        <h1>Editar Vehículo</h1>
+
+        <form th:action="@{/trabajadores/editar/{id}(id=${vehiculo.id})}"
+              method="post"
+              enctype="multipart/form-data"
+              th:object="${vehiculo}">
+
+            <input type="hidden" name="id" th:value="*{id}">
+
+            <div class="form-group">
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" th:field="*{marca}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" th:field="*{modelo}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="año">Año:</label>
+                <input type="number" id="año" th:field="*{año}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" step="0.01" id="precio" th:field="*{precio}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <select id="categoria" th:field="*{categoria}" required>
+                    <option value="Pick-Ups">Pick-Ups</option>
+                    <option value="Camionetas">Camionetas</option>
+                    <option value="Automóviles">Automóviles</option>
+                    <option value="Performance">Performance</option>
+                    <option value="Híbridos">Híbridos</option>
+                    <option value="Comerciales">Comerciales</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="motor">Motor:</label>
+                <input type="text" id="motor" th:field="*{motor}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="transmision">Transmisión:</label>
+                <select id="transmision" th:field="*{transmision}" required>
+                    <option value="Automática">Automática</option>
+                    <option value="Manual">Manual</option>
+                    <option value="CVT">CVT</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="combustible">Combustible:</label>
+                <select id="combustible" th:field="*{combustible}" required>
+                    <option value="Gasolina">Gasolina</option>
+                    <option value="Diésel">Diésel</option>
+                    <option value="Híbrido">Híbrido</option>
+                    <option value="Eléctrico">Eléctrico</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="pasajeros">Pasajeros:</label>
+                <input type="number" id="pasajeros" th:field="*{pasajeros}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" th:field="*{descripcion}" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="imagen">Imagen:</label>
+                <input type="file" id="imagen" name="imagen">
+                <img th:if="${vehiculo.imagenUrl}" th:src="${vehiculo.imagenUrl}" alt="Imagen actual" class="current-image">
+            </div>
+
+            <button type="submit" class="btn-guardar">Guardar Cambios</button>
+            <a th:href="@{/trabajadores}" class="btn-cancelar">Cancelar</a>
+        </form>
+    </div>
+</main>
+
+<footer class="main-footer">
+    <div class="social-container">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+</footer>
+</body>
+</html>

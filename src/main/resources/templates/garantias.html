@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garantías - NexGen Motors Concesionario Oficial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+    --primary: #002e5b;
+    --secondary: #e53238;
+    --accent: #002e5b;
+    --light: #f9f9f9;
+    --dark: #111;
+    --text: #333;
+    --text-light: #777;
+    --border: #dee2e6;
+    --white: #ffffff;
+    --black: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    color: var(--text);
+    padding-top: 80px; /* Espacio para la barra fija */
+    line-height: 1.6;
+    background-color: var(--light);
+}
+
+/* Barra de navegación modificada */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border-bottom: 1px solid transparent;
+}
+
+nav.scrolled {
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--black); /* Cambiado a negro permanentemente */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-logo img {
+    height: 40px;
+    transition: all 0.3s;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--black); /* Cambiado a negro permanentemente */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--secondary);
+}
+        /* Resto del diseño original de garantías */
+        .hero {
+            background: linear-gradient(rgba(0, 46, 91, 0.8), rgba(0, 46, 91, 0.8)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-button {
+            display: inline-block;
+            background: #e53238;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .hero-button:hover {
+            background: white;
+            color: #002e5b;
+        }
+
+        .warranty-section {
+            padding: 80px 50px;
+            background: #f9f9f9;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #002e5b;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            color: #666;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .warranty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .warranty-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .warranty-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .warranty-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .warranty-info {
+            padding: 30px;
+        }
+
+        .warranty-name {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #002e5b;
+        }
+
+        .warranty-coverage {
+            color: #e53238;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .warranty-features {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .warranty-features li {
+            margin-bottom: 10px;
+            list-style-position: inside;
+        }
+
+        .warranty-button {
+            display: inline-block;
+            background: #002e5b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .warranty-button:hover {
+            background: #e53238;
+        }
+
+        .benefits {
+            padding: 80px 50px;
+            background: white;
+        }
+
+        .benefits-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .benefit-item {
+            display: flex;
+            gap: 20px;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: #002e5b;
+            flex-shrink: 0;
+        }
+
+        .benefit-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #002e5b;
+        }
+
+        .benefit-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .faq {
+            padding: 80px 50px;
+            background: #f9f9f9;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            background: #002e5b;
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background: white;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 500px;
+        }
+
+        .cta {
+            padding: 80px 50px;
+            background: #002e5b;
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .cta-button:first-child {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .cta-button:hover {
+            background: white;
+            color: #002e5b;
+        }
+
+        footer {
+            background: #111;
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #e53238;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            background: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #e53238;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="nav-logo">
+        <img src="https://via.placeholder.com/150x50?text=NexGen+Motors" alt="NexGen Motors Logo">
+    </div>
+    <div class="nav-links">
+        <a href="/vehiculos">Vehículos</a>
+        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+        <a href="/login">Iniciar sesión</a>
+        <a href="/usuario/cita">Cita</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Garantías NexGen Motors</h1>
+        <p>Protege tu inversión con nuestros planes de garantía extendida y disfruta de la tranquilidad que solo NexGen Motors puede ofrecerte.</p>
+        <a href="#warranties" class="hero-button">Conoce nuestras garantías</a>
+    </div>
+</section>
+
+<section class="warranty-section" id="warranties">
+    <h2 class="section-title">Nuestros Planes de Garantía</h2>
+    <p class="section-subtitle">Ofrecemos diferentes opciones de protección para adaptarnos a las necesidades de cada conductor y garantizar la máxima tranquilidad en cada kilómetro.</p>
+
+    <div class="warranty-grid">
+        <div class="warranty-card">
+            <div class="warranty-image" style="background-image: url('https://images.unsplash.com/photo-1494972308805-463bc619d34e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80');"></div>
+            <div class="warranty-info">
+                <h3 class="warranty-name">Garantía Básica</h3>
+                <p class="warranty-coverage">3 años o 60,000 km</p>
+                <ul class="warranty-features">
+                    <li>Cobertura en componentes mecánicos</li>
+                    <li>Asistencia vial las 24 horas</li>
+                    <li>Servicio de grúa en caso de falla</li>
+                    <li>Reparaciones con repuestos originales</li>
+                    <li>Válida en toda la red de concesionarios NexGen Motors</li>
+                </ul>
+                <a href="#" class="warranty-button">Más información</a>
+            </div>
+        </div>
+
+        <div class="warranty-card">
+            <div class="warranty-image" style="background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80');"></div>
+            <div class="warranty-info">
+                <h3 class="warranty-name">Garantía Extendida</h3>
+                <p class="warranty-coverage">5 años o 100,000 km</p>
+                <ul class="warranty-features">
+                    <li>Amplía la cobertura de tu garantía básica</li>
+                    <li>Protección para motor, transmisión y tren motriz</li>
+                    <li>Asistencia en viajes nacionales</li>
+                    <li>Auto sustituto en reparaciones largas</li>
+                    <li>Descuentos en servicios de mantenimiento</li>
+                </ul>
+                <a href="#" class="warranty-button">Más información</a>
+            </div>
+        </div>
+
+        <div class="warranty-card">
+            <div class="warranty-image" style="background-image: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80');"></div>
+            <div class="warranty-info">
+                <h3 class="warranty-name">Garantía Premium</h3>
+                <p class="warranty-coverage">7 años o 150,000 km</p>
+                <ul class="warranty-features">
+                    <li>Cobertura integral para tu vehículo</li>
+                    <li>Protección para sistemas eléctricos y electrónicos</li>
+                    <li>Asistencia vial internacional</li>
+                    <li>Hotel y alimentos en caso de avería lejos de casa</li>
+                    <li>Prioridad en servicio y atención</li>
+                </ul>
+                <a href="#" class="warranty-button">Más información</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="benefits">
+    <h2 class="section-title">Beneficios de Nuestras Garantías</h2>
+    <p class="section-subtitle">Elige la protección NexGen Motors y disfruta de ventajas exclusivas diseñadas para tu tranquilidad</p>
+
+    <div class="benefits-container">
+        <div class="benefit-item">
+            <div class="benefit-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="benefit-content">
+                <h3>Protección Integral</h3>
+                <p>Cobertura amplia que protege los componentes más importantes de tu vehículo contra defectos de fabricación y fallas prematuras.</p>
+            </div>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon">
+                <i class="fas fa-road"></i>
+            </div>
+            <div class="benefit-content">
+                <h3>Asistencia Vial</h3>
+                <p>Servicio de grúa, paso de corriente, cambio de llanta y envío de combustible las 24 horas los 365 días del año en toda la República Mexicana.</p>
+            </div>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <div class="benefit-content">
+                <h3>Reparaciones Garantizadas</h3>
+                <p>Todas las reparaciones se realizan con refacciones originales NexGen Motors y por técnicos certificados, asegurando la máxima calidad en cada servicio.</p>
+            </div>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon">
+                <i class="fas fa-car-side"></i>
+            </div>
+            <div class="benefit-content">
+                <h3>Auto Sustituto</h3>
+                <p>En caso de que tu vehículo requiera permanecer más de 24 horas en taller, te proporcionamos un auto sustituto sin costo adicional.</p>
+            </div>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon">
+                <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <div class="benefit-content">
+                <h3>Cobertura Nacional</h3>
+                <p>Válida en toda la red de concesionarios NexGen Motors en México, sin importar dónde hayas adquirido tu vehículo.</p>
+            </div>
+        </div>
+
+        <div class="benefit-item">
+            <div class="benefit-icon">
+                <i class="fas fa-hand-holding-usd"></i>
+            </div>
+            <div class="benefit-content">
+                <h3>Valor de Reventa</h3>
+                <p>Mantén el valor de tu vehículo en el mercado con un historial de mantenimiento y reparaciones certificadas por NexGen Motors.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="faq">
+    <h2 class="section-title">Preguntas Frecuentes</h2>
+    <p class="section-subtitle">Resuelve tus dudas sobre nuestros planes de garantía</p>
+
+    <div class="faq-container">
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>¿Qué cubre exactamente la garantía básica de NexGen Motors?</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>La garantía básica de NexGen Motors cubre defectos de materiales o mano de obra en todos los componentes del vehículo, excepto los sujetos a desgaste normal. Incluye motor, transmisión, sistemas eléctricos, suspensión y más. Los componentes como frenos, llantas y batería tienen coberturas específicas según su uso normal.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>¿Puedo transferir mi garantía si vendo mi vehículo?</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Sí, todas nuestras garantías son transferibles a los siguientes dueños del vehículo sin costo adicional. Esto aumenta el valor de reventa de tu NexGen Motors. Solo es necesario notificar al concesionario para actualizar los datos del nuevo propietario en nuestro sistema.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>¿Qué debo hacer para mantener válida mi garantía?</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Debes realizar los servicios de mantenimiento programados en los intervalos recomendados en el manual del propietario, preferentemente en la red de concesionarios NexGen Motors autorizados. Guarda los comprobantes de servicio y usa únicamente refacciones y lubricantes recomendados por el fabricante.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>¿La garantía cubre daños por accidente o mal uso?</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>No, la garantía no cubre daños resultantes de accidentes, negligencia, mal uso, modificaciones no autorizadas o falta de mantenimiento adecuado. Para estos casos recomendamos contar con un seguro de auto que proteja tu inversión contra estos riesgos.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>¿Cómo activo mi garantía extendida?</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Puedes adquirir la garantía extendida en cualquier momento antes de que expire tu garantía básica, aunque te recomendamos hacerlo lo antes posible para obtener mejores condiciones. Visita tu concesionario NexGen Motors más cercano donde un asesor te explicará las opciones disponibles para tu modelo específico.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>¿Listo para proteger tu NexGen?</h2>
+    <p>Nuestros especialistas en garantías están disponibles para asesorarte y ayudarte a elegir el plan que mejor se adapte a tus necesidades y estilo de conducción.</p>
+    <div class="cta-buttons">
+        <a href="#" class="cta-button">Contáctanos</a>
+        <a href="#" class="cta-button">Agendar cita</a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Vehículos</h3>
+            <ul>
+                <li><a href="#">Nuevos modelos</a></li>
+                <li><a href="#">Seminuevos</a></li>
+                <li><a href="#">Electricos e híbridos</a></li>
+                <li><a href="#">Promociones</a></li>
+                <li><a href="#">Cotizador en línea</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Servicios</h3>
+            <ul>
+                <li><a href="#">Agendar servicio</a></li>
+                <li><a href="#">Estado de mi vehículo</a></li>
+                <li><a href="/garantias">Garantías</a></li>
+                <li><a href="#">Accesorios</a></li>
+                <li><a href="#">Asistencia vial</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Financiamiento</h3>
+            <ul>
+                <li><a href="/credito">Crédito automotriz</a></li>
+                <li><a href="#">Leasing</a></li>
+                <li><a href="#">Seguros</a></li>
+                <li><a href="/credito">Calculadora de pagos</a></li>
+                <li><a href="#">Preguntas frecuentes</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Concesionario</h3>
+            <ul>
+                <li><a href="/nosotros">Sobre nosotros</a></li>
+                <li><a href="#">Trabaja con nosotros</a></li>
+                <li><a href="#">Eventos</a></li>
+                <li><a href="#">Noticias</a></li>
+                <li><a href="#">Contáctanos</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+
+    <div class="copyright">
+        <p>&copy; 2023 Concesionario NexGen Motors. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<a href="https://wa.me/525512345678" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const item = question.parentNode;
+            item.classList.toggle('active');
+            document.querySelectorAll('.faq-item').forEach(otherItem => {
+                if (otherItem !== item && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+<script>
+    // Efecto de la barra de navegación
+    window.addEventListener('scroll', function() {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+
+    // Asegurarse que el nav tenga la clase scrolled si no está en la parte superior
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        }
+    });
+</script>
+</body>
+</html>

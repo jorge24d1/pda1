@@ -1,0 +1,330 @@
+/* styles2.css - Estilo profesional para concesionario Ford */
+
+/* Variables de color y tipografía */
+:root {
+  --ford-blue: #00274C;
+  --ford-light-blue: #0066CC;
+  --ford-white: #FFFFFF;
+  --ford-gray: #F2F2F2;
+  --ford-dark-gray: #333333;
+  --ford-accent: #FF0000;
+  --font-main: 'Arial', sans-serif;
+  --font-heading: 'Arial Black', sans-serif;
+}
+
+/* Reset y estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--ford-dark-gray);
+  line-height: 1.6;
+  background-color: var(--ford-gray);
+}
+
+/* Header */
+.main-header {
+  background-color: var(--ford-white);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ford-logo img {
+  height: 50px;
+  width: auto;
+}
+
+.main-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: var(--ford-blue);
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+.main-nav a:hover {
+  color: var(--ford-light-blue);
+}
+
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--ford-light-blue);
+  transition: width 0.3s;
+}
+
+.main-nav a:hover::after {
+  width: 100%;
+}
+
+/* Main content */
+.main-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Secciones principales */
+.section-1, .section-2, .section-3 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+  background-color: var(--ford-white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.section-1-image, .section-2-image, .section-3-image {
+  flex: 1;
+  min-height: 400px;
+  background-size: cover;
+  background-position: center;
+}
+
+.section-1-image {
+  background-image: url('/images/1739316205596_auto_1.jpeg');
+}
+
+.section-2-image {
+  background-image: url('/images/1739316205596_auto_1.jpeg');
+}
+
+.section-3-image {
+  background-image: url('/images/1739316205596_auto_1.jpeg');
+}
+
+.section-1-text, .section-2-text, .section-3-text {
+  flex: 1;
+  padding: 3rem;
+}
+
+.section-1 h2, .section-2 h2, .section-3 h2 {
+  font-family: var(--font-heading);
+  color: var(--ford-blue);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.section-1 p, .section-2 p, .section-3 p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: var(--ford-dark-gray);
+}
+
+/* Sección 4 - Dos columnas */
+.section-4 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.section-4-content {
+  background-color: var(--ford-white);
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.section-4-content:hover {
+  transform: translateY(-5px);
+}
+
+.section-4-content h2 {
+  color: var(--ford-blue);
+  margin-bottom: 1rem;
+}
+
+/* Sección de características */
+.feature-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.feature-card {
+  background-color: var(--ford-white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.feature-card:nth-child(1) .feature-image {
+  background-image: url('/images/fy.jpg');
+}
+
+.feature-card:nth-child(2) .feature-image {
+  background-image: url('/images/.jpg');
+  background-color: #ddd; /* Fallback si la imagen no carga */
+}
+
+.feature-card:nth-child(3) .feature-image {
+  background-image: url('/images/f.jpg');
+  background-color: #ddd; /* Fallback si la imagen no carga */
+}
+
+.feature-text {
+  padding: 1.5rem;
+}
+
+.feature-text h3 {
+  color: var(--ford-blue);
+  margin-bottom: 0.5rem;
+}
+
+.feature-text p {
+  margin-bottom: 1.5rem;
+  color: var(--ford-dark-gray);
+}
+
+/* Botones */
+.btn-explorar {
+  background-color: var(--ford-blue);
+  color: var(--ford-white);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-explorar:hover {
+  background-color: var(--ford-light-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+.main-footer {
+  background-color: var(--ford-blue);
+  color: var(--ford-white);
+  padding: 2rem;
+  text-align: center;
+}
+
+.social-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.social-container a {
+  color: var(--ford-white);
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.social-container a:hover {
+  color: var(--ford-light-blue);
+}
+
+.main-footer p {
+  font-size: 0.9rem;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .section-1, .section-2, .section-3 {
+    flex-direction: column;
+  }
+
+  .section-1-image, .section-2-image, .section-3-image {
+    width: 100%;
+    min-height: 300px;
+  }
+
+  .section-1-text, .section-2-text, .section-3-text {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .ford-logo {
+    margin-bottom: 1rem;
+  }
+
+  .main-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .section-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-nav {
+    gap: 0.8rem;
+  }
+
+  .main-nav a {
+    font-size: 0.8rem;
+  }
+
+  .section-1 h2, .section-2 h2, .section-3 h2 {
+    font-size: 2rem;
+  }
+
+  .btn-explorar {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+}

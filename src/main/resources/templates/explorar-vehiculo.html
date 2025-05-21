@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${vehiculo.marca + ' ' + vehiculo.modelo}">Explorar Vehículo</title>
+    <link rel="stylesheet" href="/styles4.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+
+        .explorar-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .vehicle-header {
+            margin-bottom: 2rem;
+        }
+        .vehicle-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        .vehicle-subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        .vehicle-price {
+            font-size: 1.8rem;
+            color: #e74c3c;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        .vehicle-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .vehicle-image-container {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .vehicle-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .specs-container {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .spec-icon {
+            color: #3498db;
+            font-size: 1.2rem;
+            min-width: 20px;
+        }
+        .spec-label {
+            font-weight: bold;
+            margin-right: 0.3rem;
+        }
+        .vehicle-description {
+            line-height: 1.6;
+            color: #555;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .btn-cotizar, .btn-back {
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-align: center;
+            display: inline-block;
+        }
+        .btn-cotizar {
+            background-color: #e74c3c;
+            color: white;
+            border: 2px solid #e74c3c;
+        }
+        .btn-cotizar:hover {
+            background-color: #c0392b;
+            border-color: #c0392b;
+        }
+        .btn-back {
+            background-color: white;
+            color: #3498db;
+            border: 2px solid #3498db;
+        }
+        .btn-back:hover {
+            background-color: #f8f9fa;
+        }
+        @media (max-width: 768px) {
+            .vehicle-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        .color-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+.color-section h3 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.color-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.color-option {
+    padding: 0.5rem 1rem;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    background: white;
+}
+
+.color-option:hover {
+    border-color: #3498db;
+    transform: translateY(-2px);
+}
+
+.color-option.selected {
+    border-color: #e74c3c;
+    background-color: #e74c3c;
+    color: white;
+    font-weight: bold;
+}
+
+    </style>
+</head>
+<body>
+<header class="main-header">
+    <div class="header-content">
+        <div class="ford-logo">
+            <a th:href="@{/}"><img src="/images/ford-logo.png" alt="Ford Logo"></a>
+        </div>
+        <nav class="main-nav">
+            <a href="/vehiculos">Vehiculos</a>
+            <!-- <a href="/vehiculos">VEHÍCULOS</a> -->
+            <!--<a href="/admin">ADMINISTRADOR</a>-->
+            <!-- <a href="/usuario/login">INICIAR SESIÓN</a> -->
+            <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+            <a href="/usuario/cita">Cita</a>
+            <a href="/usuario/perfil"> Mi perfil </a>
+        </nav>
+    </div>
+</header>
+
+<main class="main-content explorar-container">
+    <div class="vehicle-header">
+        <h1 class="vehicle-title" th:text="${vehiculo.marca + ' ' + vehiculo.modelo}"></h1>
+        <div class="vehicle-subtitle" th:text="${vehiculo.año} + ' • ' + ${vehiculo.categoria}"></div>
+        <div class="vehicle-price" th:text="'$' + ${#numbers.formatDecimal(vehiculo.precio, 1, 2, 'COMMA')}"></div>
+    </div>
+
+    <div class="vehicle-content">
+        <div class="vehicle-image-container">
+            <img th:src="${vehiculo.imagenUrl}" alt="Vehículo" class="vehicle-image">
+        </div>
+
+        <div>
+            <div class="specs-container">
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <i class="fas fa-tachometer-alt spec-icon"></i>
+                        <div>
+                            <span class="spec-label">Motor:</span>
+                            <span th:text="${vehiculo.motor ?: 'N/A'}"></span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-gas-pump spec-icon"></i>
+                        <div>
+                            <span class="spec-label">Combustible:</span>
+                            <span th:text="${vehiculo.combustible ?: 'N/A'}"></span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-cog spec-icon"></i>
+                        <div>
+                            <span class="spec-label">Transmisión:</span>
+                            <span th:text="${vehiculo.transmision ?: 'N/A'}"></span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-users spec-icon"></i>
+                        <div>
+                            <span class="spec-label">Pasajeros:</span>
+                            <span th:text="${vehiculo.pasajeros != null ? vehiculo.pasajeros : 'N/A'}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección de colores -->
+                <div class="color-section" th:if="${vehiculo.colores != null and !vehiculo.colores.isEmpty()}">
+                    <h3>Colores disponibles</h3>
+                    <div class="color-options">
+                        <div th:each="color : ${vehiculo.colores}"
+                             class="color-option"
+                             th:text="${color}"
+                             th:data-color="${color}"
+                             onclick="seleccionarColor(this)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vehicle-description" th:text="${vehiculo.descripcion ?: 'Este vehículo no tiene descripción disponible.'}"></div>
+
+            <div class="action-buttons">
+                <a href="#" class="btn-cotizar" id="cotizarBtn" onclick="irACita()">
+                    <i class="fas fa-file-alt"></i> SOLICITAR COTIZACIÓN
+                </a>
+                <a href="/vehiculos" class="btn-back">
+                    <i class="fas fa-arrow-left"></i> VOLVER
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="main-footer">
+    <div class="social-container">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+</footer>
+
+<script th:src="@{/js/chatbot.js}"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.addEventListener('DOMContentLoaded', function() {
+        const vehiculoId = [[${vehiculo?.id}]];
+        let colorSeleccionado = null;
+
+        console.log("ID del vehículo:", vehiculoId); // Para depuración
+
+        // Función para seleccionar color
+        window.seleccionarColor = function(elemento) {
+            document.querySelectorAll('.color-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            elemento.classList.add('selected');
+            colorSeleccionado = elemento.getAttribute('data-color');
+            localStorage.setItem(`colorVehiculo_${vehiculoId}`, colorSeleccionado);
+            console.log("Color seleccionado:", colorSeleccionado); // Para depuración
+        };
+
+        // Función para ir a cita
+        window.irACita = function() {
+            if (!vehiculoId) {
+                console.error("No hay ID de vehículo");
+                return;
+            }
+
+            let url = `/usuario/cita?vehiculoId=${vehiculoId}`;
+
+            if (colorSeleccionado) {
+                url += `&color=${encodeURIComponent(colorSeleccionado)}`;
+            }
+
+            console.log("Redirigiendo a:", url); // Para depuración
+            window.location.href = url;
+        };
+
+        // Configurar el botón
+        document.getElementById('cotizarBtn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            irACita();
+        });
+
+        // Cargar color seleccionado previamente
+        if (vehiculoId) {
+            const colorGuardado = localStorage.getItem(`colorVehiculo_${vehiculoId}`);
+            if (colorGuardado) {
+                document.querySelectorAll('.color-option').forEach(opt => {
+                    if (opt.getAttribute('data-color') === colorGuardado) {
+                        opt.classList.add('selected');
+                        colorSeleccionado = colorGuardado;
+                    }
+                });
+            }
+        }
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

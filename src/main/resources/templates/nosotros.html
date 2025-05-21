@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros - NexGen Motors Concesionario Oficial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+    --primary: #002e5b;
+    --secondary: #e53238;
+    --accent: #002e5b;
+    --light: #f9f9f9;
+    --dark: #111;
+    --text: #333;
+    --text-light: #777;
+    --border: #dee2e6;
+    --white: #ffffff;
+    --black: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    color: var(--text);
+    padding-top: 80px; /* Espacio para la barra fija */
+    line-height: 1.6;
+    background-color: var(--light);
+}
+
+/* Barra de navegación modificada */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border-bottom: 1px solid transparent;
+}
+
+nav.scrolled {
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--black); /* Cambiado a negro permanentemente */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-logo img {
+    height: 40px;
+    transition: all 0.3s;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--black); /* Cambiado a negro permanentemente */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--secondary);
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(rgba(0, 46, 91, 0.8), rgba(0, 46, 91, 0.8)), url('https://images.unsplash.com/photo-1494972308805-463bc619d34e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+    color: white;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+/* Resto de las secciones (mantenido igual que en tu código original) */
+.history {
+    padding: 80px 50px;
+    background: #f9f9f9;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #002e5b;
+    text-align: center;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+    color: #666;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.history-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 50px;
+    align-items: center;
+}
+
+.history-text {
+    color: #666;
+    line-height: 1.6;
+}
+
+.history-text p {
+    margin-bottom: 20px;
+}
+
+.history-image {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.history-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.values {
+    padding: 80px 50px;
+    background: white;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.value-card {
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 10px;
+    background: #f9f9f9;
+    transition: transform 0.3s;
+}
+
+.value-card:hover {
+    transform: translateY(-10px);
+}
+
+.value-icon {
+    font-size: 3rem;
+    color: #002e5b;
+    margin-bottom: 20px;
+}
+
+.value-title {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #002e5b;
+}
+
+.value-description {
+    color: #666;
+}
+
+.team {
+    padding: 80px 50px;
+    background: #f9f9f9;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.team-member {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+}
+
+.member-photo {
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+}
+
+.member-info {
+    padding: 20px;
+}
+
+.member-name {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    color: #002e5b;
+}
+
+.member-position {
+    color: #e53238;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.member-bio {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.awards {
+    padding: 80px 50px;
+    background: white;
+}
+
+.awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+    align-items: center;
+}
+
+.award-item {
+    text-align: center;
+    padding: 20px;
+}
+
+.award-image {
+    height: 100px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.award-image img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.award-title {
+    font-weight: bold;
+    color: #002e5b;
+    margin-bottom: 5px;
+}
+
+.award-year {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.testimonials {
+    padding: 80px 50px;
+    background: #002e5b;
+    color: white;
+    text-align: center;
+}
+
+.testimonials .section-title {
+    color: white;
+}
+
+.testimonials .section-subtitle {
+    color: #ccc;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.testimonial-card {
+    background: rgba(255,255,255,0.1);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.testimonial-text {
+    font-style: italic;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #555;
+    margin-right: 15px;
+    overflow: hidden;
+}
+
+.author-info h4 {
+    margin-bottom: 5px;
+}
+
+.author-info p {
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.cta {
+    padding: 80px 50px;
+    background: #e53238;
+    color: white;
+    text-align: center;
+}
+
+.cta h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.cta p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-button {
+    display: inline-block;
+    background: white;
+    color: #002e5b;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.cta-button:hover {
+    background: #002e5b;
+    color: white;
+}
+
+footer {
+    background: #111;
+    color: white;
+    padding: 50px;
+    text-align: center;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.footer-column h3 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #e53238;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-column ul li a:hover {
+    color: white;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.social-links a {
+    color: white;
+    background: #333;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.social-links a:hover {
+    background: #e53238;
+}
+
+.copyright {
+    margin-top: 30px;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #25D366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 100;
+    transition: all 0.3s;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Media queries */
+@media (max-width: 992px) {
+    nav {
+        padding: 15px 3%;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 15px 20px;
+    }
+
+    .nav-logo img {
+        height: 30px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-links {
+        display: none;
+    }
+}
+    </style>
+</head>
+<body>
+<nav>
+    <div class="nav-logo">
+        <img src="https://via.placeholder.com/150x50?text=NexGen+Motors" alt="NexGen Motors Logo">
+    </div>
+    <div class="nav-links">
+        <a href="/vehiculos">Vehículos</a>
+        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+        <a href="/login">Iniciar sesión</a>
+        <a href="/usuario/cita">Cita</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Concesionario NexGen Motors Oficial</h1>
+        <p>Más de 20 años de experiencia brindando soluciones de movilidad con calidad, innovación y servicio excepcional.</p>
+    </div>
+</section>
+
+<section class="history">
+    <h2 class="section-title">Nuestra Historia</h2>
+    <p class="section-subtitle">Desde nuestros humildes comienzos hasta convertirnos en líderes del sector automotriz</p>
+
+    <div class="history-content">
+        <div class="history-text">
+            <p>Fundado en 2002, nuestro concesionario comenzó como un pequeño establecimiento con un sueño: revolucionar la experiencia de compra de autos en México. Lo que inició con un equipo de 10 apasionados por los automóviles, hoy es una organización con más de 150 colaboradores comprometidos con la excelencia.</p>
+            
+            <p>En 2010 nos convertimos en Concesionario Oficial NexGen Motors, marcando un hito en nuestra trayectoria. Este reconocimiento nos permitió ofrecer productos de mayor calidad y acceder a la tecnología innovadora que caracteriza a la marca.</p>
+            
+            <p>Hoy, con 3 sucursales en la Ciudad de México y más de 15,000 vehículos entregados, mantenemos nuestro compromiso con la satisfacción total del cliente, ofreciendo no solo autos excepcionales, sino una experiencia de compra y servicio que supera expectativas.</p>
+        </div>
+        <div class="history-image">
+            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80" alt="Historia de NexGen Motors">
+        </div>
+    </div>
+</section>
+
+<section class="values">
+    <h2 class="section-title">Nuestros Valores</h2>
+    <p class="section-subtitle">Principios que guían cada decisión y acción en nuestra organización</p>
+
+    <div class="values-grid">
+        <div class="value-card">
+            <div class="value-icon">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <h3 class="value-title">Integridad</h3>
+            <p class="value-description">Actuamos con honestidad y transparencia en todas nuestras relaciones comerciales y personales.</p>
+        </div>
+
+        <div class="value-card">
+            <div class="value-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h3 class="value-title">Pasión</h3>
+            <p class="value-description">Nos apasiona lo que hacemos y eso se refleja en el servicio que brindamos cada día.</p>
+        </div>
+
+        <div class="value-card">
+            <div class="value-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3 class="value-title">Innovación</h3>
+            <p class="value-description">Buscamos constantemente mejoras y nuevas formas de sorprender a nuestros clientes.</p>
+        </div>
+
+        <div class="value-card">
+            <div class="value-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3 class="value-title">Trabajo en Equipo</h3>
+            <p class="value-description">Creemos en el poder de la colaboración para lograr resultados excepcionales.</p>
+        </div>
+
+        <div class="value-card">
+            <div class="value-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <h3 class="value-title">Excelencia</h3>
+            <p class="value-description">Nos esforzamos por superar expectativas en cada detalle de nuestro servicio.</p>
+        </div>
+
+        <div class="value-card">
+            <div class="value-icon">
+                <i class="fas fa-leaf"></i>
+            </div>
+            <h3 class="value-title">Sostenibilidad</h3>
+            <p class="value-description">Promovemos prácticas responsables con el medio ambiente y nuestra comunidad.</p>
+        </div>
+    </div>
+</section>
+
+<section class="team">
+    <h2 class="section-title">Nuestro Equipo</h2>
+    <p class="section-subtitle">Conoce a las personas que hacen posible nuestra excelencia en servicio</p>
+
+    <div class="team-grid">
+        <div class="team-member">
+            <div class="member-photo" style="background-image: url('https://randomuser.me/api/portraits/women/65.jpg');"></div>
+            <div class="member-info">
+                <h3 class="member-name">Laura Méndez</h3>
+                <p class="member-position">Directora General</p>
+                <p class="member-bio">Con 18 años en la industria automotriz, Laura lidera nuestra visión estratégica y crecimiento sostenible.</p>
+            </div>
+        </div>
+
+        <div class="team-member">
+            <div class="member-photo" style="background-image: url('https://randomuser.me/api/portraits/men/32.jpg');"></div>
+            <div class="member-info">
+                <h3 class="member-name">Carlos Rodríguez</h3>
+                <p class="member-position">Gerente de Ventas</p>
+                <p class="member-bio">Especialista en relaciones con clientes, Carlos asegura que cada compra sea una experiencia memorable.</p>
+            </div>
+        </div>
+
+        <div class="team-member">
+            <div class="member-photo" style="background-image: url('https://randomuser.me/api/portraits/women/44.jpg');"></div>
+            <div class="member-info">
+                <h3 class="member-name">Ana Sánchez</h3>
+                <p class="member-position">Gerente de Servicio</p>
+                <p class="member-bio">Con certificaciones internacionales, Ana garantiza que tu NexGen Motors reciba el mejor mantenimiento posible.</p>
+            </div>
+        </div>
+
+        <div class="team-member">
+            <div class="member-photo" style="background-image: url('https://randomuser.me/api/portraits/men/75.jpg');"></div>
+            <div class="member-info">
+                <h3 class="member-name">Javier López</h3>
+                <p class="member-position">Asesor Financiero</p>
+                <p class="member-bio">Experto en soluciones crediticias, Javier encuentra el plan perfecto para cada presupuesto.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="awards">
+    <h2 class="section-title">Reconocimientos</h2>
+    <p class="section-subtitle">Premios y certificaciones que respaldan nuestra excelencia</p>
+
+    <div class="awards-grid">
+        <div class="award-item">
+            <div class="award-image">
+                <img src="https://via.placeholder.com/150x100?text=Premio+Excelencia" alt="Premio Excelencia NexGen Motors">
+            </div>
+            <div class="award-title">Premio a la Excelencia NexGen Motors</div>
+            <div class="award-year">2023, 2021, 2019</div>
+        </div>
+
+        <div class="award-item">
+            <div class="award-image">
+                <img src="https://via.placeholder.com/150x100?text=Certificación+ISO" alt="Certificación ISO 9001">
+            </div>
+            <div class="award-title">Certificación ISO 9001</div>
+            <div class="award-year">Desde 2015</div>
+        </div>
+
+        <div class="award-item">
+            <div class="award-image">
+                <img src="https://via.placeholder.com/150x100?text=Mejor+Servicio" alt="Mejor Servicio al Cliente">
+            </div>
+            <div class="award-title">Mejor Servicio al Cliente</div>
+            <div class="award-year">Revista Automotriz 2022</div>
+        </div>
+
+        <div class="award-item">
+            <div class="award-image">
+                <img src="https://via.placeholder.com/150x100?text=Líder+en+Ventas" alt="Líder en Ventas">
+            </div>
+            <div class="award-title">Líder en Ventas Región Centro</div>
+            <div class="award-year">2020-2023</div>
+        </div>
+
+        <div class="award-item">
+            <div class="award-image">
+                <img src="https://via.placeholder.com/150x100?text=Premio+Innovación" alt="Premio Innovación">
+            </div>
+            <div class="award-title">Premio a la Innovación</div>
+            <div class="award-year">Asociación Mexicana Automotriz 2021</div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials">
+    <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+    <p class="section-subtitle">Experiencias reales de personas que confiaron en nosotros</p>
+
+    <div class="testimonials-grid">
+        <div class="testimonial-card">
+            <p class="testimonial-text">"Compré mi primer NexGen Motors aquí hace 10 años y desde entonces no he cambiado de concesionario. El servicio postventa es excepcional y siempre me tratan como familia."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Miguel Ángel Torres</h4>
+                    <p>Cliente desde 2013</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <p class="testimonial-text">"Como mujer, a veces me sentía intimidada en otros concesionarios. Aquí me asesoraron con paciencia y profesionalismo, sin presiones. ¡Totalmente recomendado!"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Daniela Ramírez</h4>
+                    <p>Dueña de NexGen Seltos 2022</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <p class="testimonial-text">"Para nuestra empresa, encontrar un concesionario confiable era crucial. Han superado nuestras expectativas en servicio y soporte para nuestra flotilla de 12 vehículos NexGen Motors."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Ricardo Fernández</h4>
+                    <p>Director de Logística, Empresa XYZ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>¿Listo para vivir la experiencia NexGen Motors?</h2>
+    <p>Visítanos y descubre por qué somos el concesionario preferido por miles de familias y empresas en México.</p>
+    <a href="#" class="cta-button">Agendar una visita</a>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Vehículos</h3>
+            <ul>
+                <li><a href="#">Nuevos modelos</a></li>
+                <li><a href="#">Seminuevos</a></li>
+                <li><a href="#">Electricos e híbridos</a></li>
+                <li><a href="#">Promociones</a></li>
+                <li><a href="#">Cotizador en línea</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Servicios</h3>
+            <ul>
+                <li><a href="#">Agendar servicio</a></li>
+                <li><a href="#">Estado de mi vehículo</a></li>
+                <li><a href="/garantias">Garantías</a></li>
+                <li><a href="#">Accesorios</a></li>
+                <li><a href="#">Asistencia vial</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Financiamiento</h3>
+            <ul>
+                <li><a href="/credito">Crédito automotriz</a></li>
+                <li><a href="#">Leasing</a></li>
+                <li><a href="#">Seguros</a></li>
+                <li><a href="/credito">Calculadora de pagos</a></li>
+                <li><a href="#">Preguntas frecuentes</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Concesionario</h3>
+            <ul>
+                <li><a href="/nosotros">Sobre nosotros</a></li>
+                <li><a href="#">Trabaja con nosotros</a></li>
+                <li><a href="#">Eventos</a></li>
+                <li><a href="#">Noticias</a></li>
+                <li><a href="#">Contáctanos</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+
+    <div class="copyright">
+        <p>&copy; 2023 Concesionario NexGen Motors. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<a href="https://wa.me/525512345678" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const avatars = document.querySelectorAll('.author-avatar');
+        const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6'];
+
+        avatars.forEach((avatar, index) => {
+            const color = colors[index % colors.length];
+            avatar.style.background = color;
+            avatar.innerHTML = `<i class="fas fa-user" style="color: white; font-size: 1.5rem; line-height: 50px;"></i>`;
+        });
+
+        // Añadir funcionalidad para las preguntas frecuentes (si se agrega esa sección)
+        document.querySelectorAll('.faq-question')?.forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Smooth scrolling para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
+</script>
+<script>
+    // Efecto de la barra de navegación
+    window.addEventListener('scroll', function() {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+
+    // Asegurarse que el nav tenga la clase scrolled si no está en la parte superior
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        }
+    });
+</script>
+</body>
+</html>

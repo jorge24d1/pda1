@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Citas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table-responsive {
+            margin-top: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .btn-volver {
+            margin-bottom: 20px;
+        }
+        .estado-atendida {
+            color: green;
+            font-weight: bold;
+        }
+        .estado-pendiente {
+            color: orange;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Listado de Citas Registradas</h1>
+
+    <a th:href="@{/vehiculos}" class="btn btn-secondary btn-volver">
+        ← Volver a Vehículos
+    </a>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cédula</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Sede</th>
+                <th>Tipo</th>
+                <th>Vehículo</th>
+                <th>Modelo</th>
+                <th>Estado</th>
+                <th>Comentario</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cita : ${citas}">
+                <td th:text="${cita.nombres}"></td>
+                <td th:text="${cita.apellidos}"></td>
+                <td th:text="${cita.cedula}"></td>
+                <td th:text="${cita.correoElectronico}"></td>
+                <td th:text="${cita.telefono}"></td>
+                <td th:text="${cita.sede}"></td>
+                <td th:text="${cita.tipo}"></td>
+                <td>
+                            <span th:if="${cita.vehiculoId != null}">
+                                <span th:text="${cita.nombreVehiculo} ?: 'Vehículo '+${cita.vehiculoId}"></span>
+                            </span>
+                    <span th:if="${cita.vehiculoId == null}">-</span>
+                </td>
+                <td th:text="${cita.modelo} ?: '-'"></td>
+                <td>
+                            <span th:class="${cita.atendida} ? 'estado-atendida' : 'estado-pendiente'"
+                                  th:text="${cita.atendida} ? 'Atendida' : 'Pendiente'">
+                            </span>
+                </td>
+                <td th:text="${cita.comentario} ?: 'Sin comentarios'"></td>
+            </tr>
+            </tbody>
+        </table>
+        <nav th:if="${citas.totalPages > 1}">
+    <ul class="pagination justify-content-center">
+
+        <li class="page-item" th:classappend="${citas.first} ? 'disabled'">
+            <a class="page-link" th:href="@{/citas(page=${citas.number - 1}, size=${citas.size})}">Anterior</a>
+        </li>
+
+        <li class="page-item" th:each="i : ${#numbers.sequence(0, citas.totalPages - 1)}"
+            th:classappend="${i == citas.number} ? 'active'">
+            <a class="page-link" th:href="@{/citas(page=${i}, size=${citas.size})}" th:text="${i + 1}">1</a>
+        </li>
+
+        <li class="page-item" th:classappend="${citas.last} ? 'disabled'">
+            <a class="page-link" th:href="@{/citas(page=${citas.number + 1}, size=${citas.size})}">Siguiente</a>
+        </li>
+
+    </ul>
+</nav>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

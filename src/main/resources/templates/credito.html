@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crédito Automotriz - NexGen Motors Concesionario Oficial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+    --primary: #002e5b;
+    --secondary: #e53238;
+    --accent: #002e5b;
+    --light: #f9f9f9;
+    --dark: #111;
+    --text: #333;
+    --text-light: #777;
+    --border: #dee2e6;
+    --white: #ffffff;
+    --black: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    color: var(--text);
+    padding-top: 80px; /* Espacio para la barra fija */
+    line-height: 1.6;
+    background-color: var(--light);
+}
+
+/* Barra de navegación modificada */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border-bottom: 1px solid transparent;
+}
+
+nav.scrolled {
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--black); /* Cambiado a negro permanentemente */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-logo img {
+    height: 40px;
+    transition: all 0.3s;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--black); /* Cambiado a negro permanentemente */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--secondary);
+}
+
+        /* Resto del diseño original de crédito automotriz */
+        .hero {
+            background: linear-gradient(rgba(0, 46, 91, 0.8), rgba(0, 46, 91, 0.8)), url('https://images.unsplash.com/photo-1485291571150-772bcfc10da5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-button {
+            display: inline-block;
+            background: #e53238;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .hero-button:hover {
+            background: white;
+            color: #002e5b;
+        }
+
+        .financing-options {
+            padding: 80px 50px;
+            background: #f9f9f9;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #002e5b;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            color: #666;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .option-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .option-icon {
+            font-size: 3rem;
+            color: #002e5b;
+            margin-bottom: 20px;
+        }
+
+        .option-name {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #002e5b;
+        }
+
+        .option-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .option-button {
+            display: inline-block;
+            background: #002e5b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .option-button:hover {
+            background: #e53238;
+        }
+
+        .calculator {
+            padding: 80px 50px;
+            background: white;
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .calculator-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #002e5b;
+        }
+
+        .calculator-form input,
+        .calculator-form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .calculator-results {
+            background: #002e5b;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .result-item {
+            margin-bottom: 20px;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .calculator-button {
+            background: #e53238;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .calculator-button:hover {
+            background: #c12a2f;
+        }
+
+        .requirements {
+            padding: 80px 50px;
+            background: #f9f9f9;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .requirement-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .requirement-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #002e5b;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .requirement-title i {
+            color: #e53238;
+        }
+
+        .requirement-list {
+            list-style-position: inside;
+            color: #666;
+        }
+
+        .requirement-list li {
+            margin-bottom: 10px;
+        }
+
+        .partners {
+            padding: 80px 50px;
+            background: white;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            align-items: center;
+        }
+
+        .partner-logo {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .partner-logo img {
+            max-height: 100%;
+            max-width: 100%;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+
+        .partner-logo:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .testimonials {
+            padding: 80px 50px;
+            background: #002e5b;
+            color: white;
+            text-align: center;
+        }
+
+        .testimonials .section-title {
+            color: white;
+        }
+
+        .testimonials .section-subtitle {
+            color: #ccc;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #555;
+            margin-right: 15px;
+            overflow: hidden;
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .cta {
+            padding: 80px 50px;
+            background: #e53238;
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #002e5b;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #002e5b;
+            color: white;
+        }
+
+        footer {
+            background: #111;
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #e53238;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            background: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #e53238;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="nav-logo">
+        <img src="https://via.placeholder.com/150x50?text=NexGen+Motors" alt="NexGen Motors Logo">
+    </div>
+    <div class="nav-links">
+        <a href="/vehiculos">Vehículos</a>
+        <a th:href="@{/usuario/agendamiento}">Agendamiento online</a>
+        <a href="/login">Iniciar sesión</a>
+        <a href="/usuario/cita">Cita</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Crédito Automotriz NexGen Motors</h1>
+        <p>Obtén las mejores condiciones de financiamiento para tu nuevo vehículo. ¡Aprobación rápida y tasas competitivas!</p>
+        <a href="#calculator" class="hero-button">Calcula tu crédito</a>
+    </div>
+</section>
+
+<section class="financing-options">
+    <h2 class="section-title">Opciones de Financiamiento</h2>
+    <p class="section-subtitle">Encuentra el plan que mejor se adapte a tus necesidades y haz realidad tu sueño de tener un vehículo NexGen</p>
+
+    <div class="options-grid">
+        <div class="option-card">
+            <div class="option-icon">
+                <i class="fas fa-hand-holding-usd"></i>
+            </div>
+            <h3 class="option-name">Crédito Tradicional</h3>
+            <p class="option-description">Financiamiento a plazos fijos con pagos mensuales. Elige entre 12 a 60 meses con tasas desde el 8.9% anual.</p>
+            <a href="#calculator" class="option-button">Más información</a>
+        </div>
+
+        <div class="option-card">
+            <div class="option-icon">
+                <i class="fas fa-business-time"></i>
+            </div>
+            <h3 class="option-name">Plan Empresarial</h3>
+            <p class="option-description">Soluciones especiales para empresas y flotillas con beneficios fiscales y planes personalizados según tus necesidades.</p>
+            <a href="#calculator" class="option-button">Más información</a>
+        </div>
+
+        <div class="option-card">
+            <div class="option-icon">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <h3 class="option-name">Plan Renovación</h3>
+            <p class="option-description">Cambia tu auto usado por un nuevo NexGen con facilidad. Aplicamos el valor de tu auto como enganche.</p>
+            <a href="#calculator" class="option-button">Más información</a>
+        </div>
+
+        <div class="option-card">
+            <div class="option-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="option-name">Leasing Operativo</h3>
+            <p class="option-description">Ideal para empresas que buscan deducciones fiscales. Paga solo la depreciación del vehículo durante el contrato.</p>
+            <a href="#calculator" class="option-button">Más información</a>
+        </div>
+    </div>
+</section>
+
+<section class="calculator" id="calculator">
+    <h2 class="section-title">Calculadora de Pagos</h2>
+    <p class="section-subtitle">Simula tu crédito y descubre cuál es el plan de pagos que mejor se ajusta a tu presupuesto</p>
+
+    <div class="calculator-container">
+        <div class="calculator-grid">
+            <div class="calculator-form">
+                <label for="vehicle-price">Precio del vehículo (MXN)</label>
+                <input type="number" id="vehicle-price" placeholder="Ej: 450,000" min="100000" max="3000000">
+
+                <label for="down-payment">Enganche (MXN)</label>
+                <input type="number" id="down-payment" placeholder="Ej: 90,000" min="0" max="3000000">
+
+                <label for="loan-term">Plazo (meses)</label>
+                <select id="loan-term">
+                    <option value="12">12 meses</option>
+                    <option value="24">24 meses</option>
+                    <option value="36" selected>36 meses</option>
+                    <option value="48">48 meses</option>
+                    <option value="60">60 meses</option>
+                </select>
+
+                <label for="interest-rate">Tasa de interés anual (%)</label>
+                <input type="number" id="interest-rate" placeholder="Ej: 9.5" step="0.1" min="5" max="25" value="9.5">
+            </div>
+
+            <div class="calculator-results">
+                <div class="result-item">
+                    <div class="result-label">Monto a financiar</div>
+                    <div class="result-value" id="financed-amount">$0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Pago mensual estimado</div>
+                    <div class="result-value" id="monthly-payment">$0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Intereses totales</div>
+                    <div class="result-value" id="total-interest">$0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Costo total del crédito</div>
+                    <div class="result-value" id="total-cost">$0</div>
+                </div>
+                <button class="calculator-button" id="calculate-button">Calcular</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="requirements">
+    <h2 class="section-title">Requisitos para tu Crédito</h2>
+    <p class="section-subtitle">Prepara tu documentación para un proceso de aprobación rápido y sencillo</p>
+
+    <div class="requirements-grid">
+        <div class="requirement-card">
+            <h3 class="requirement-title"><i class="fas fa-user-tie"></i> Personas Físicas</h3>
+            <ul class="requirement-list">
+                <li>Identificación oficial vigente (INE/IFE, pasaporte)</li>
+                <li>Comprobante de domicilio no mayor a 3 meses</li>
+                <li>Comprobante de ingresos (3 últimos recibos de nómina o estados de cuenta)</li>
+                <li>Referencias personales y bancarias</li>
+                <li>Historial crediticio positivo</li>
+                <li>Edad mínima: 18 años, máxima: 70 al término del crédito</li>
+            </ul>
+        </div>
+
+        <div class="requirement-card">
+            <h3 class="requirement-title"><i class="fas fa-building"></i> Personas Morales</h3>
+            <ul class="requirement-list">
+                <li>Acta constitutiva de la empresa</li>
+                <li>Identificación oficial del representante legal</li>
+                <li>Comprobante de domicilio fiscal</li>
+                <li>Estados financieros del último año</li>
+                <li>Declaraciones de impuestos</li>
+                <li>Referencias comerciales y bancarias</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="partners">
+    <h2 class="section-title">Bancos Aliados</h2>
+    <p class="section-subtitle">Trabajamos con las instituciones financieras más sólidas del país</p>
+
+    <div class="partners-grid">
+        <div class="partner-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Bancomer_logo.svg/1200px-Bancomer_logo.svg.png" alt="BBVA">
+        </div>
+        <div class="partner-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Santander_Bank_logo.svg/1200px-Santander_Bank_logo.svg.png" alt="Santander">
+        </div>
+        <div class="partner-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/HSBC_logo.svg/1200px-HSBC_logo.svg.png" alt="HSBC">
+        </div>
+        <div class="partner-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Scotiabank_Logo_2012.svg/1200px-Scotiabank_Logo_2012.svg.png" alt="Scotiabank">
+        </div>
+        <div class="partner-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Banamex_logo.svg/1200px-Banamex_logo.svg.png" alt="Citibanamex">
+        </div>
+    </div>
+</section>
+
+<section class="testimonials">
+    <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+    <p class="section-subtitle">Experiencias reales de personas que financiaron su vehículo con nosotros</p>
+
+    <div class="testimonials-grid">
+        <div class="testimonial-card">
+            <p class="testimonial-text">"El proceso de financiamiento fue muy sencillo y rápido. Me aprobaron el crédito en menos de 24 horas y con una tasa mejor de lo que esperaba. ¡Ahora disfruto de mi NexGen X1!"</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Roberto Sánchez</h4>
+                    <p>Dueño de NexGen X1 2023</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <p class="testimonial-text">"Como empresario, el plan de leasing operativo me ha permitido renovar mi flotilla con beneficios fiscales importantes. Excelente asesoría por parte del equipo de NexGen Motors."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Carlos Mendoza</h4>
+                    <p>Dueño de 5 NexGen E1 para su empresa</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <p class="testimonial-text">"Aprobamos el crédito para mi NexGen S1 con mi historial crediticio que no era perfecto. Trabajaron conmigo para encontrar un plan de pagos que pudiera manejar cómodamente."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar"></div>
+                <div class="author-info">
+                    <h4>Laura González</h4>
+                    <p>Dueña de NexGen S1 2022</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>¿Listo para adquirir tu NexGen?</h2>
+    <p>Nuestros asesores financieros están disponibles para ayudarte a encontrar la mejor opción de crédito para tu nuevo vehículo.</p>
+    <a href="#" class="cta-button">Solicitar crédito ahora</a>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Vehículos</h3>
+            <ul>
+                <li><a href="#">Nuevos modelos</a></li>
+                <li><a href="#">Seminuevos</a></li>
+                <li><a href="#">Electricos e híbridos</a></li>
+                <li><a href="#">Promociones</a></li>
+                <li><a href="#">Cotizador en línea</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Servicios</h3>
+            <ul>
+                <li><a href="#">Agendar servicio</a></li>
+                <li><a href="#">Estado de mi vehículo</a></li>
+                <li><a href="/garantias">Garantías</a></li>
+                <li><a href="#">Accesorios</a></li>
+                <li><a href="#">Asistencia vial</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Financiamiento</h3>
+            <ul>
+                <li><a href="/credito">Crédito automotriz</a></li>
+                <li><a href="#">Leasing</a></li>
+                <li><a href="#">Seguros</a></li>
+                <li><a href="/credito">Calculadora de pagos</a></li>
+                <li><a href="#">Preguntas frecuentes</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Concesionario</h3>
+            <ul>
+                <li><a href="/nosotros">Sobre nosotros</a></li>
+                <li><a href="#">Trabaja con nosotros</a></li>
+                <li><a href="#">Eventos</a></li>
+                <li><a href="#">Noticias</a></li>
+                <li><a href="#">Contáctanos</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+
+    <div class="copyright">
+        <p>&copy; 2023 NexGen Motors. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<a href="https://wa.me/525512345678" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+    document.getElementById('calculate-button').addEventListener('click', function() {
+        const price = parseFloat(document.getElementById('vehicle-price').value) || 0;
+        const downPayment = parseFloat(document.getElementById('down-payment').value) || 0;
+        const term = parseInt(document.getElementById('loan-term').value);
+        const rate = parseFloat(document.getElementById('interest-rate').value) / 100 / 12;
+        
+        const financedAmount = price - downPayment;
+        const monthlyPayment = (financedAmount * rate) / (1 - Math.pow(1 + rate, -term));
+        const totalInterest = (monthlyPayment * term) - financedAmount;
+        const totalCost = financedAmount + totalInterest;
+        
+        document.getElementById('financed-amount').textContent = '$' + financedAmount.toLocaleString('es-MX', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById('monthly-payment').textContent = '$' + monthlyPayment.toLocaleString('es-MX', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById('total-interest').textContent = '$' + totalInterest.toLocaleString('es-MX', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById('total-cost').textContent = '$' + totalCost.toLocaleString('es-MX', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const avatars = document.querySelectorAll('.author-avatar');
+        const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6'];
+
+        avatars.forEach((avatar, index) => {
+            const color = colors[index % colors.length];
+            avatar.style.background = color;
+            avatar.innerHTML = `<i class="fas fa-user" style="color: white; font-size: 1.5rem; line-height: 50px;"></i>`;
+        });
+
+        document.getElementById('vehicle-price').value = '450000';
+        document.getElementById('down-payment').value = '90000';
+        document.getElementById('calculate-button').click();
+    });
+</script>
+<script>
+    // Efecto de la barra de navegación
+    window.addEventListener('scroll', function() {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+
+    // Asegurarse que el nav tenga la clase scrolled si no está en la parte superior
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        }
+    });
+</script>
+</body>
+</html>
